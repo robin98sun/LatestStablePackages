@@ -1,4 +1,4 @@
-# latestNodejsPackages
+# LatestStablePackages
 In a Node.js project, although you can set the package version definition to `*` to get the newest versions automatically, sometimes the unstable version could be included which may cause your product system unstable too.
 This script is to update all the package definitions in package.json file to the latest STABLE ones, and rebuild all packages as you will.
 
