@@ -1,0 +1,73 @@
+#?/bin/bash
+
+. ~/.bash_profile
+
+oldfile=package.json
+newfile=package.json.newest
+>$newfile
+
+{
+    modules=`cat $oldfile|
+		sed 's/"//g; s/,//g; s/;//g; s/://g; s/*//g'|
+		awk 'BEGIN{
+			a=0
+		     }
+		     {
+		       if(a==1){
+		 	 if($1=="}"){
+			   a=0;
+			 }else{
+			   print $1
+			 }
+		       }if($1=="dependencies"){
+			 a=1;
+		       }
+		     }'`
+
+    cat $oldfile|
+      awk 'BEGIN{
+            a=1;
+          }
+          {
+            if(a==1){
+              print
+            } if($1=="\"dependencies\":"){
+              a=0
+            }
+          }'
+    
+    line=1
+    for m in `echo $modules`; do
+        npm view $m|sed "s/'//g; s/://g; s/,//g"|
+    	awk '{
+                  if($1=="dist-tags" && $2=="{" && $3=="latest"){
+    		  if("'$line'"!=1){
+    		    printf "\t\t,  " 
+                      }else{
+                        printf "\t\t   "
+                      } 
+                      print "\"'$m'\": \"" $4 "\""; 
+                    }
+                 }';
+       line=`expr $line + 1`
+    done
+    
+    cat $oldfile|
+      awk 'BEGIN{
+            a=0;
+            b=0;
+          }
+          {
+            if(a==1 && b==1){
+              print
+            }else if(a==1 && b==0 && $1=="},"){
+              b=1; 
+              print
+            } if($1=="\"dependencies\":"){
+              a=1;
+              b=0;
+            }
+          }'
+}|cat > $newfile
+
+mv $newfile $oldfile
