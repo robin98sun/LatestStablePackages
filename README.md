@@ -13,8 +13,8 @@ This is a script to update package definition to the newest version in the  pack
 
 ### Requirement
 
-1. Linux/Unix/MacOS are supported
-2. `bash` is installed
+1. Linux/Unix/MacOS
+2. bash
 
 ### Run
 1. Copy file `newestNodejsPackages` to `nodejs project root directory` which contain the file `package.json`
