@@ -23,4 +23,7 @@ This is a script to update package definition to the newest version in the  pack
 ### Rebuilding packages
 For the safe purpuse, rebuilding is NOT the default option. You can have rebuilding included by adding `REBUILD` option: `bash newestNodejsPackages REBUILD`
 
+### Drop back
+The original package.json file is backed up in file `package.json.backup`
+
 Enjoy!
