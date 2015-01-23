@@ -11,14 +11,16 @@ This is a script to update package definition to the newest version in the  pack
 
 # How to use
 
-1. Copy file `newestNodejsPackages` to `your nodejs project path` which contain the file `package.json`
-2. execute the command in terminal: `sh newestNodejsPackages`
+### Requirement
+
+1. Linux/Unix/MacOS are supported
+2. `bash` is installed
+
+### Run
+1. Copy file `newestNodejsPackages` to `nodejs project root directory` which contain the file `package.json`
+2. execute the command in terminal at that path: `bash newestNodejsPackages`
 
 ### Rebuilding packages
-Rebuilding is NOT this script's responsibility, and for the safe purpose, it's NOT included.
-However, rebuilding is simple:
+For the safe purpuse, rebuilding is NOT the default option. You can have rebuilding included by adding `REBUILD` option: `bash newestNodejsPackages REBUILD`
 
-1. Remove the `node_modules` folder of `project root path`
-2. Execute the command at the `project root path`: `npm install`
-
-Enjoy the simplicity of building digital world :-)
+Enjoy!
