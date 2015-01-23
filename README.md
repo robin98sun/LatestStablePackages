@@ -1,6 +1,6 @@
 # latestNodejsPackages
-Although you can set the package version definition to "*" to get the newest version automatically, sometimes the unstable version could be included which may cause your product system unstable too.
-This script is to update package definition to the latest STABLE version in the  package.json file, and rebuild all packages as you will.
+In a Node.js project, although you can set the package version definition to `*` to get the newest versions automatically, sometimes the unstable version could be included which may cause your product system unstable too.
+This script is to update all the package definitions in package.json file to the latest STABLE ones, and rebuild all packages as you will.
 
 ***
 
@@ -18,11 +18,11 @@ This script is to update package definition to the latest STABLE version in the 
 2. bash
 
 ### Run
-1. Copy file `newestNodejsPackages` to `nodejs project root directory` which contain the file `package.json`
-2. execute the command in terminal at that path: `bash newestNodejsPackages`
+1. Copy file `latestStablePackages` to `nodejs project root directory` which contain the file `package.json`
+2. execute the command in terminal at that path: `bash latestStablePackages`
 
 ### Rebuilding packages
-For the safe purpuse, rebuilding is NOT the default option. You can have rebuilding included by adding `REBUILD` option: `bash newestNodejsPackages REBUILD`
+For the safe purpuse, rebuilding is NOT the default option. You can have rebuilding included by adding `REBUILD` option: `bash latestStablePackages REBUILD`
 
 ### Drop back
 The original package.json file is backed up in file `package.json.backup`
