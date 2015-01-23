@@ -1,5 +1,6 @@
-# newestNodejsPackages
-This is a script to update package definition to the newest version in the  package.json file
+# latestNodejsPackages
+Although you can set the package version definition to "*" to get the newest version automatically, sometimes the unstable version could be included which may cause your product system unstable too.
+This script is to update package definition to the latest STABLE version in the  package.json file, and rebuild all packages as you will.
 
 ***
 
