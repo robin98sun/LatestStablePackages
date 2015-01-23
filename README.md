@@ -4,9 +4,9 @@ This script is to update all the package definitions in package.json file to the
 
 ***
 
-`Website`   http://mrsunlin.github.io/newestNodejsPackages
+`Website`   http://mrsunlin.github.io/LatestStablePackages
 
-`wiki`      https://github.com/mrsunlin/newestNodejsPackages/wiki
+`wiki`      https://github.com/mrsunlin/LatestStablePackages/wiki
 
 `author`    https://www.facebook.com/mrsunlin
 
