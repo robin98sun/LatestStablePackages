@@ -74,6 +74,7 @@ newfile=package.json.newest
           }'
 }|cat > $newfile
 
+cp $oldfile ${oldfile}.backup
 mv $newfile $oldfile
 
 if [[ "$REBUILD" == "REBUILD" ]];then
