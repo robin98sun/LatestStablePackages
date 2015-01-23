@@ -1,13 +1,17 @@
 #?/bin/bash
 
-. ~/.bash_profile
+if [[ -f "~/.bash_profile" ]];then . ~/.bash_profile;
+elif [[ -f "~/.profile" ]];then . ~/.profile ;
+fi
+
+REBUILD=$1
 
 oldfile=package.json
 newfile=package.json.newest
 >$newfile
 
 {
-    modules=`cat $oldfile|
+    packages=`cat $oldfile|
 		sed 's/"//g; s/,//g; s/;//g; s/://g; s/*//g'|
 		awk 'BEGIN{
 			a=0
@@ -37,8 +41,8 @@ newfile=package.json.newest
           }'
     
     line=1
-    for m in `echo $modules`; do
-        npm view $m|sed "s/'//g; s/://g; s/,//g"|
+    for p in `echo $packages`; do
+        npm view $p|sed "s/'//g; s/://g; s/,//g"|
     	awk '{
                   if($1=="dist-tags" && $2=="{" && $3=="latest"){
     		  if("'$line'"!=1){
@@ -46,7 +50,7 @@ newfile=package.json.newest
                       }else{
                         printf "\t\t   "
                       } 
-                      print "\"'$m'\": \"" $4 "\""; 
+                      print "\"'$p'\": \"" $4 "\""; 
                     }
                  }';
        line=`expr $line + 1`
@@ -71,3 +75,8 @@ newfile=package.json.newest
 }|cat > $newfile
 
 mv $newfile $oldfile
+
+if [[ "$REBUILD" == "REBUILD" ]];then
+   rm -rf ./node_modules
+   npm install
+fi
