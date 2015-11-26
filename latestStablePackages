@@ -1,5 +1,33 @@
 #?/bin/bash
 
+# LatestStablePackages
+# In a Node.js project, although you can set the package version definition to * to get the newest versions automatically, sometimes the unstable version could be included which may cause your product system unstable too. This script is to update all the package definitions in package.json file to the latest STABLE ones, and rebuild all packages as you will.
+# 
+# Website http://mrsunlin.github.io/LatestStablePackages
+# 
+# wiki https://github.com/mrsunlin/LatestStablePackages/wiki
+# 
+# author https://www.facebook.com/mrsunlin
+# 
+# How to use
+# Requirement
+# 
+# Linux/Unix/MacOS
+# bash
+# Run
+# 
+# Copy file latestStablePackages to nodejs project root directory which contain the file package.json
+# execute the command in terminal at that path: bash latestStablePackages
+# Rebuilding packages
+# 
+# For the safe purpuse, rebuilding is NOT the default option. You can have rebuilding included by adding REBUILD option: bash latestStablePackages REBUILD
+# 
+# Drop back
+# 
+# The original package.json file is backed up in file package.json.backup
+# 
+# Enjoy!
+
 if [[ -f "~/.bash_profile" ]];then . ~/.bash_profile;
 elif [[ -f "~/.profile" ]];then . ~/.profile ;
 fi
@@ -40,19 +68,20 @@ newfile=package.json.newest
             }
           }'
     
+    count=`echo $packages|wc -w|awk '{print $1}'`
     line=1
     for p in `echo $packages`; do
         npm view $p|sed "s/'//g; s/://g; s/,//g"|
     	awk '{
                   if($1=="dist-tags" && $2=="{" && $3=="latest"){
-    		  if("'$line'"!=1){
-    		    printf "\t\t,  " 
-                      }else{
-                        printf "\t\t   "
-                      } 
-                      print "\"'$p'\": \"" $4 "\""; 
-                    }
-                 }';
+                     printf "\t\t\"'$p'\": \"" $4 "\""; 
+       		     if("'$line'"!="'$count'"){
+       		       print "," 
+                     }else{
+                       print ""
+                     } 
+                   }
+              }';
        line=`expr $line + 1`
     done
     
