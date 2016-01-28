@@ -40,7 +40,7 @@ newfile=package.json.newest
 
 {
     packages=`cat $oldfile|
-		sed 's/"//g; s/,//g; s/;//g; s/://g; s/*//g'|
+		sed 's/"//g; s/,//g; s/;//g; s/:/ /g; s/*//g'|
 		awk 'BEGIN{
 			a=0
 		     }
@@ -55,8 +55,8 @@ newfile=package.json.newest
 			 a=1;
 		       }
 		     }'`
-
-    cat $oldfile|
+    
+    cat $oldfile|sed 's/:/: /g'|
       awk 'BEGIN{
             a=1;
           }
@@ -71,21 +71,16 @@ newfile=package.json.newest
     count=`echo $packages|wc -w|awk '{print $1}'`
     line=1
     for p in `echo $packages`; do
-        npm view $p|sed "s/'//g; s/://g; s/,//g"|
-    	awk '{
-                  if($1=="dist-tags" && $2=="{" && $3=="latest"){
-                     printf "\t\t\"'$p'\": \"" $4 "\""; 
-       		     if("'$line'"!="'$count'"){
-       		       print "," 
-                     }else{
-                       print ""
-                     } 
-                   }
-              }';
+       v=`npm view $p version`
+       if [[ $line -lt $count ]];then
+          echo "    \"$p\": \"$v\","
+       else
+          echo "    \"$p\": \"$v\""
+       fi  
        line=`expr $line + 1`
     done
     
-    cat $oldfile|
+    cat $oldfile|sed 's/:/: /g'|
       awk 'BEGIN{
             a=0;
             b=0;
